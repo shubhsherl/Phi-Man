@@ -1,0 +1,892 @@
+	#include<iostream.h>              // FOR basic functions
+#include<dos.h>                   // FOR delay()
+#include<stdio.h>                 // FOR fflush(),gets()
+#include<stdlib.h>                // FOR exit(),system()
+#include<conio.h>                 // FOR getch(),gotoxy()
+#include<graphics.h>              // FOR including the graphics
+#include<fstream.h>               // FOR data file handeling
+#include<string.h>                // FOIR strlen(),strcmpi()
+fstream fin,fin2,fin3;
+
+ unsigned long  price=500;
+
+class game
+{
+int l1,l2,l3,lall;          // LIFE LINES 1,2,3,all used
+char city[40],name[40];     //name of city,person
+char pri[10];               //price in char
+public:
+
+/***************************************************
+		DISPLAY QUESTION
+****************************************************/
+
+void display()
+{
+	cleardevice();
+	settextstyle(0,0,3); setcolor(GREEN);outtextxy(100,250,"DONT CHEAT!!!!");delay(1500);
+	settextstyle(1,0,2);
+	int count=1;
+		cleardevice();
+
+char ans[20],line[120],op1[120],op2[120],op3[120],op4[120];
+
+	cleardevice();
+	settextstyle(0,0,3);
+outtextxy(125,10,"DISPLAY QUESTIONS");
+	setbkcolor(BLUE);
+	char ask;
+fin.open("kbcm.txt",ios::in);
+fin.seekg(0,ios::beg);
+
+	while(ask!='n'&&count<15)
+{
+	fin.getline(line,120,'\n');
+	fin.getline(op1,120,'\n');
+	fin.getline(op2,120,'\n');
+	fin.getline(op3,120,'\n');
+	fin.getline(op4,120,'\n');
+	fin.getline(ans,20,'\n');
+
+       if(strlen(line)>=40||strlen(op1)>=25||strlen(op2)>=25||strlen(op3)>=25||strlen(op4)>=25)
+	settextstyle(COMPLEX_FONT,0,1);
+	else
+	settextstyle(COMPLEX_FONT,0,2);
+	setcolor(YELLOW); outtextxy(60,75,line);
+		outtextxy(60,135,op1);
+		outtextxy(320,135,op2);
+		outtextxy(60,225,op3);
+		outtextxy(320,225,op4);
+gotoxy(20,20);cout<<"Press 'y' for Next:";
+	ask=getch();
+
+	setcolor(BLACK);
+
+
+	 outtextxy(60,75,line);
+		outtextxy(60,135,op1);
+		outtextxy(320,135,op2);
+		outtextxy(60,225,op3);
+		outtextxy(320,225,op4);
+count++;
+
+if (count==15)
+{cleardevice();settextstyle(0,0,3); setcolor(GREEN);outtextxy(10,250,"THATS ALL BUT DONT CHEAT!!!!");
+
+}}
+fin.close();getch();
+}
+/**************************************************
+		HELP
+****************************************************/
+void help()
+{
+cleardevice();
+	setbkcolor(GREEN);
+	setcolor(YELLOW); settextstyle(0,0,4);
+outtextxy(250,10,"HELP");
+	settextstyle(1,0,2);
+	setcolor(BLUE);
+outtextxy(20,90,"WELCOME TO THE COMPUTER VERSION OF");delay(200);
+outtextxy(40,120,"KAUNN BANEGA CROREPATI");
+	setcolor(GREEN);outtextxy(40,180,"Use the keyboard to play the game.");delay(200);
+	setcolor(YELLOW);outtextxy(40,220,"* Press a,b,c,d for entering the options");delay(200);
+	setcolor(BROWN);outtextxy(40,260,"* Press 'f' for 50:50,'p'for phone a friend");
+outtextxy(20,280,"'v' for VOTER");
+setcolor(BLUE);outtextxy(40,320,"* You can use more than one lifeline for one question");
+setcolor(RED);outtextxy(40,360,"* Keep the necessary text file with the game to play");
+getch();
+}
+/******************************************************
+		STYLISH CLEAR
+*******************************************************/
+
+
+void clear()
+
+{
+setlinestyle(0,0,1);
+	for(int x=0;x<=485;x++)
+	{ 	setcolor(LIGHTGRAY);
+	line(x+10,20,x+10,340);
+
+	setcolor(0);
+	rectangle(0,20,x,340);
+	line(x+10,20,x+10,340);
+
+	}
+	setlinestyle(0,0,3);
+	sleep(1);
+
+}
+/***********************************************************
+			ENTER QUESTION
+************************************************************/
+void editquestion()
+
+{
+cleardevice();
+
+fin.open("kbcm.txt",ios::app);
+
+char ques[80],ops[20],ans[2],ask;
+
+int nq=1;
+settextstyle(0,0,3);setcolor(WHITE);
+outtextxy(40,400,"ENTER QUESTIONS");
+	fin.seekg(0);
+	while(ask!='n')
+{
+gotoxy(1,6);cout<<"Q"<<nq<<' ';
+gets(ques);
+fflush(stdin);
+fin<<ques<<'\n';
+		for(int k=0;k<4;k++)
+{
+gotoxy(2,k+8);cout<<"Option:"<<k+1<<":";
+gets(ops);
+fflush(stdin);
+	if(k==3)
+cout<<"\n\n";
+	if(k==0){fin<<"[A] "<<ops<<'\n';}
+	if(k==1){fin<<"[B] "<<ops<<'\n';}
+	if(k==2){fin<<"[C] "<<ops<<'\n';}
+	if(k==3){fin<<"[D] "<<ops<<'\n';}}
+cout<<"\nEnter answer too int he form of a,b,c,d:";
+cin>>ans;
+fin<<ans<<'\n';
+cout<<"\n\nWant to enter more?";nq++;
+cin>>ask;clear();
+}fin.close();}
+
+/******************************************************
+			MUSIC
+*********************************************************/
+
+void music()
+{
+sound(1000);
+delay(600);
+
+	sound(1100);
+	delay(600);
+sound(1200);
+delay(500);
+
+	sound(1000);
+	delay(500);
+sound(1100);
+delay(550);
+
+	sound(1200);
+	delay(450);
+sound(1350);
+delay(450);
+
+	sound(1500);
+	delay(1000);
+	nosound();
+
+}
+/**********************************************
+		ASK NAME OF PLAYER
+***********************************************/
+void askname()
+{
+settextstyle(0,0,1);
+setcolor(7);
+outtextxy(0,90,"WELCOME TO THE COMPUTER VERSION OF Kaunn banega crorepati");
+outtextxy(0,115,"Please enter your name   :  ");
+gotoxy(30,8);
+gets(name);
+fflush(stdin);
+outtextxy(0,150,"Please enter your city   :  ");
+gotoxy(30,10);
+gets(city);
+fflush(stdin);
+sleep(1);
+
+clear();
+sleep(1);
+setcolor(7);
+outtextxy(10,90,"LET'S WELCOME  ");
+outtextxy(270,110," FROM ");
+setcolor(RED);
+outtextxy(150,90,name);
+outtextxy(320,110,city);
+}
+/****************************************************
+		START GAME
+****************************************************/
+
+void start()
+{
+lall=0;
+l1=l2=l3=0;
+cleardevice();
+setbkcolor(BLACK);
+startscreen();
+cleardevice();
+setbkcolor(BLUE);
+
+settextstyle(12,0,5);
+setlinestyle(1,0,1);
+
+setcolor(BLUE);
+setlinestyle(0,0,3);
+rectangle(500,5,625,350);
+line(0,350,625,350);
+setcolor(LIGHTBLUE);
+int poly[]={40,390,60,365,560,365,580,390,560,415,60,415,40,390};
+drawpoly(7,poly);
+line(0,390,40,390);line(580,390,620,390);
+int poly1[]={40,430,50,420,290,420,300,430,290,445,50,445,40,430};
+drawpoly(7,poly1);
+int poly2[]={300,430,310,420,575,420,585,430,575,445,310,445,300,430};
+drawpoly(7,poly2);
+int poly3[]={40,465,50,450,290,450,300,465,290,475,50,475,40,465};
+drawpoly(7,poly3);
+int poly4[]={300,465,310,450,575,450,585,465,575,475,310,475,300,465};
+line(0, 430,40,430);
+line(0,465,40,465);
+line(585,430,620,430);
+line(585,465,620,465);
+drawpoly(7,poly4);
+setfillstyle(1,RED);
+settextstyle(2,0,0);
+fillellipse(525,20,20,10);
+fillellipse(565,20,20,10);
+fillellipse(605,20,20,10);
+
+setcolor(YELLOW);
+outtextxy(510,15,"50:50");
+outtextxy(550,15,"PHONE");
+outtextxy(589,13,"PUBLIC");
+outtextxy(593,18,"vote");
+settextstyle(12,0,2);
+setcolor(YELLOW);
+outtextxy(520,50,"  10000000");
+setcolor(LIGHTBLUE);
+outtextxy(520,70,"  5000000");
+outtextxy(520,90,"  2500000");
+outtextxy(520,110,"  1250000");
+outtextxy(520,130,"  640000");
+setcolor(YELLOW);
+outtextxy(520,150,"  320000");
+setcolor(LIGHTBLUE);
+outtextxy(520,170,"  160000");
+outtextxy(520,190,"  80000");
+outtextxy(520,210,"  40000");
+outtextxy(520,230,"  20000");
+setcolor(YELLOW);
+outtextxy(520,250,"  10000");
+setcolor(LIGHTBLUE);
+outtextxy(520,270,"  5000");
+outtextxy(520,290,"  3000");
+outtextxy(520,310,"  2000");
+outtextxy(520,330,"  1000");
+
+
+
+int count=1;
+
+
+	fin.open("KBCM.txt",ios::in);
+
+  char line[120],op1[120],op2[120],op3[120],op4[120],uans[20],ans[20];
+
+int nxt;
+askname();
+settextstyle(6,0,3);
+{outtextxy(190,220,"Lets START THE GAME");
+}delay(2000);
+clear();
+int up=315;
+
+
+fin.seekg(0,ios::beg);
+while(nxt!=2&&count<=15)
+{
+
+	fin.getline(line,120,'\n');
+	fin.getline(op1,120,'\n');
+	fin.getline(op2,120,'\n');
+	fin.getline(op3,120,'\n');
+	fin.getline(op4,120,'\n');
+	fin.getline(ans,20,'\n');
+
+setcolor(YELLOW);
+   settextstyle(0,0,2.5);
+if(count==1||count==7||count==11)
+   outtextxy(25,35,"GOODLUCK FOR THIS ONE");
+   if(count/3==1||count/3==3||count==13)
+  { outtextxy(25,35,"STRUCK SOMEWHERE!!");
+  outtextxy(25,55,"USE LIFELINE ");
+   }if(count%2==0)
+   outtextxy(25,35,"THE BEST PC SOFTWARE");
+   if(count/5==1)
+   outtextxy(25,35,"NEVER GIVE UP");
+
+
+if(strlen(line)>=40||strlen(op1)>=25||strlen(op2)>=25||strlen(op3)>=25||strlen(op4)>=25)
+	settextstyle(COMPLEX_FONT,0,1);
+	else
+	settextstyle(COMPLEX_FONT,0,2);
+
+setcolor(LIGHTBLUE);
+
+
+   rectangle(10,25,490,90);
+
+	       outtextxy(60,375,line);
+		outtextxy(60,415,op1);
+		outtextxy(320,415,op2);
+		outtextxy(60,445,op3);
+		outtextxy(320,445,op4);
+		setcolor(YELLOW);
+		outtextxy(600,up,"<-");
+
+wapas:
+gotoxy(7,11);
+	cout<<"\nENTER THE ANSWER OR LIFELINE KEYWORDS:";
+cin>>uans;
+clear();
+if(strcmpi(ans,uans)==0)
+{
+
+     setcolor(GREEN);
+     settextstyle(1,0,2);
+	  outtextxy(10,170,"YYEESS YOU WERE RIGHT THUS YOU WON");
+
+	price=price*2;
+	if(price==4000)
+	price=3000;
+	if(price==6000)
+	price=5000;
+	itoa(price,pri,10);
+	settextstyle(4,0,3);
+	outtextxy(150,190,pri);
+
+  }
+
+
+
+	else if(uans[0]=='f')            //LIFELINE 50-50
+{
+if(l1==0)
+{
+setcolor(LIGHTBLUE);
+settextstyle(0,HORIZ_DIR,2);
+outtextxy(30,250," 50 - 50 ");
+sleep(1);
+
+clear();
+if(strlen(line)>=40||strlen(op1)>=25||strlen(op2)>=25||strlen(op3)>=25||strlen(op4)>=25)
+	settextstyle(COMPLEX_FONT,0,1);
+	else
+	settextstyle(COMPLEX_FONT,0,2);
+	if (ans[0]=='a')
+{
+setcolor(BLACK);
+outtextxy(320,415,op2);
+outtextxy(320,445,op4);
+ }
+	else if (ans[0]=='b')
+{setcolor(BLACK);
+		outtextxy(60,415,op1);
+
+		outtextxy(320,445,op4);
+ }
+
+
+	else if (ans[0]=='c')
+{setcolor(BLACK);
+		outtextxy(320,415,op2);
+		outtextxy(60,415,op1);
+
+}
+else if(ans[0]=='d')
+{setcolor(BLACK);
+outtextxy(60,415,op1);
+		outtextxy(320,445,op4);
+
+}
+     l1=1;lall++;goto wapas;
+
+}
+else {cout<<"Lifeline used\n";delay(1000);clear();goto wapas;}
+}
+
+
+else if(uans[0]=='p')                //LIFELINE PHONO FRIEND
+{ if(l2==0)
+{setcolor(LIGHTBLUE);
+settextstyle(0,0,2);
+outtextxy(30,250,"PHONE A FRIEND ....... ");
+sleep(1);
+outtextxy(30,270,"YOUR TIME STARTS.....NOW ");
+sleep(1);
+	clear();
+setcolor(LIGHTGRAY);
+setfillstyle(2,RED);
+circle(300,200,100);
+char arc[10];
+
+settextstyle(0,HORIZ_DIR,5);
+int x=0;
+setfillstyle(1,DARKGRAY);
+for(int i=0;i<=30;i++)
+{
+setcolor(BLACK);
+pieslice(300,200,0,i*12,97);
+itoa(i,arc,10);
+	setcolor(RED);
+if(i>=10)
+x=25;
+outtextxy(280-x,180,arc);
+sleep(1);
+	setcolor(BLACK);
+outtextxy(280-x,180,arc);
+}
+gotoxy(19,20);
+cout<<"YOUR TIME ENDS HERE";delay(1000);
+l2=1;lall++;clear();goto wapas;
+}
+else {cout<<"LIFELINE USED";clear();goto wapas;}
+}
+
+else if(uans[0]=='v')                              //LIFELINE VOTER
+{
+if(l3==0)
+{randomize();
+int r1=0,r2=0,r3=0,r4=0;
+setcolor(LIGHTBLUE);
+settextstyle(0,HORIZ_DIR,3);
+outtextxy(30,250,"     VOTER ");
+sleep(2);
+clear();
+if(ans[0]=='a')
+{
+while(r1<r2||r1<r3||r1<r4||r1+r2+r3+r4!=200)
+{
+r1=random(200);
+r2=random(200);
+r3=random(200);
+r4=random(200);
+}
+}
+else if(ans[0]=='b')
+{
+while(r2<r1||r2<r3||r2<r4||r1+r2+r3+r4!=200)
+{
+r1=random(200);
+r2=random(200);
+r3=random(200);
+r4=random(200);
+}
+
+}
+else if(ans[0]=='c')
+{
+while(r3<r1||r3<r2||r3<r4||r1+r2+r3+r4!=200)
+{
+r1=random(200);
+r2=random(200);
+r3=random(200);
+r4=random(200);
+}
+}
+else if(ans[0]=='d')
+ {
+while(r4<r1||r4<r2||r4<r3||r1+r2+r3+r4!=200)
+{
+r1=random(200);
+r2=random(200);
+r3=random(200);
+r4=random(200);
+}}
+bar(200,150-r1,260,170);
+bar(265,150-r2,320,170);
+bar(325,150-r3,380,170);
+bar(385,150-r4,440,170);
+settextstyle(0,0,1);
+setcolor(GREEN);
+outtextxy(240,40,"A      B      C      D");
+  l3=1;lall++;goto wapas;
+}
+else {textbackground(RED+BLINK);cout<<"LIFELINE USED";delay(1500);clear();goto wapas;}					 //END OF VOTER
+}
+
+
+
+else {sorry(name,city,pri,count,lall);break;}
+
+
+setcolor(BLACK);
+
+
+ if(strlen(line)>=40||strlen(op1)>=25||strlen(op2)>=25||strlen(op3)>=25||strlen(op4)>=25)
+	settextstyle(COMPLEX_FONT,0,1);
+	else
+	settextstyle(COMPLEX_FONT,0,2);
+
+	 outtextxy(60,375,line);
+		outtextxy(60,415,op1);
+		outtextxy(320,415,op2);
+		outtextxy(60,445,op3);
+		outtextxy(320,445,op4);
+
+setcolor(GREEN);outtextxy(10,20,"To continue ENTER 1 else 2:");
+gotoxy(5,4);cin>>nxt;
+if(nxt==2)
+{break;}
+clear();
+setcolor(BLUE);
+outtextxy(600,up,"<-");
+up-=20;
+setcolor(BLACK);
+   settextstyle(0,0,3);
+if(count==1||count==3||count==5||count==7)
+   outtextxy(25,35,"GOODLUCK FOR THIS ONE");
+   if(count==2||count==4||count==6||count==8||count==10)
+  { outtextxy(25,35,"STRUCK SOMEWHERE!!");
+  outtextxy(25,55,"USE LIFELINE ");
+   }if(count==9||count==11||count==12||count==13)
+   outtextxy(25,35,"THE BEST PC SOFTWARE");
+   if(count==14||count==15)
+   outtextxy(25,35,"NEVER GIVE UP");
+count++;
+}
+if(count==15)
+{
+theend(name,city,pri,count,lall);
+}
+
+getch();
+ fin.close();
+}
+/*****************************************************
+		INCORRECT ANSWER
+******************************************************/
+void sorry(char name[],char city[],char pri[],int count,int lall)
+{
+	cleardevice();
+	setbkcolor(GREEN);
+	setcolor(BLUE);
+		settextstyle(3,0,4);
+		outtextxy(10,150,"SORRY THAT WAS A WRONG ANSWER");
+		delay(1000);outtextxy(90,200,"ALL YOU WON IS:");
+	   outtextxy(370,200,pri);
+	   fin3.open("player.txt",ios::app);
+	   fin3.seekg(0);
+	   fin3<<name<<'\n';
+	   fin3<<city<<'\n';
+	   fin3<<pri<<'\n';
+	   fin3<<count<<'\n';
+	   fin3<<lall<<'\n';
+	   fin3.close();
+}
+/******************************************************
+		FINISHED GAME
+*******************************************************/
+
+void theend(char name[],char city[],char pri[],int count,int lall)
+{
+cleardevice();
+	setbkcolor(GREEN);
+	setcolor(BLUE);
+		settextstyle(3,0,4);
+		outtextxy(10,150,"YOU DID IT!!!!!");
+		delay(1000);outtextxy(90,200,"YOU WON ALL:");
+	   outtextxy(370,200,pri);
+	   fin3.open("player.txt",ios::app);
+	   fin3.seekg(0);
+	   fin3<<name<<'\n';
+	   fin3<<city<<'\n';
+	   fin3<<pri<<'\n';
+	   fin3<<count<<'\n';
+	   fin3<<lall<<'\n';
+	   fin3.close();
+}
+
+/******************************************************************
+		DISPLAY PLAYER PLAYED
+*********************************************************************/
+void dispp()
+{
+cleardevice();
+setbkcolor(GREEN);
+settextstyle(0,0,3);
+outtextxy(120,10,"DISP. PLAYER");
+	char pname[40],pmoney[20],pcity[40],count[20],lall[20];
+ fin3.open("player.txt",ios::in);
+ fin3.seekg(0);settextstyle(1,0,2);
+ int nxt;
+      while(fin3)
+ {
+
+ fin3.getline(pname,40,'\n');
+ fin3.getline(pcity,40,'\n');
+ fin3.getline(pmoney,20,'\n');
+ fin3.getline(count,20,'\n');
+ fin3.getline(lall,20,'\n');
+   settextstyle(COMPLEX_FONT,0,1);
+ setcolor(WHITE);outtextxy(20,50,"NAME OF THE PERSON:");outtextxy(260,50,pname);
+ outtextxy(20,80,"CITY OF THE PERSON:");outtextxy(260,80,pcity);
+ outtextxy(20,110,"MONEy OF THE PERSON:");outtextxy(260,110,pmoney);
+ outtextxy(20,140,"REACHED UPTO Q NO:");outtextxy(260,140,count);
+ outtextxy(20,170,"LIFE LINE USED:");outtextxy(260,170,lall);
+outtextxy(20,200,"Press 1 to continue or else 2");
+nxt=getch();
+setcolor(BLACK);
+outtextxy(260,50,pname);
+outtextxy(260,80,pcity);
+ outtextxy(260,110,pmoney);
+ outtextxy(260,140,count);
+outtextxy(260,170,lall);
+if(nxt==2)
+{break;}}
+}
+/****************************************************
+			START SCREEN
+*****************************************************/
+void startscreen()
+{
+setlinestyle(0,0,3);
+setcolor(BLUE);
+setfillstyle(1,BLUE);
+circle(300,225,225);
+floodfill(300,200,BLUE);
+setcolor(LIGHTBLUE);
+setfillstyle(1,LIGHTBLUE);
+circle(300,225,185);
+floodfill(300,200,LIGHTBLUE);
+setcolor(0);
+setfillstyle(SLASH_FILL,0);
+setlinestyle(1,0,0);
+   for(int p=0;p<=185;p++)
+	{
+	      circle(300,225,p);
+	      delay(10);
+
+	}
+
+setlinestyle(1,0,3);
+setcolor(BLUE);
+setfillstyle(7,BLUE);
+fillellipse(300,225,30,185);
+fillellipse(300,225,185,30);
+ setcolor(BLUE);
+setcolor(15);
+setfillstyle(1,15);
+
+setcolor(15);
+settextstyle(8,0,5);
+
+settextstyle(0,0,3);
+
+outtextxy(100,125,"K");
+outtextxy(125,85,"A");
+outtextxy(155,55,"U");
+outtextxy(195,25,"N");
+outtextxy(240,10,"N");
+outtextxy(300,10,"B");
+outtextxy(350,20,"A");
+outtextxy(395,35,"N");
+outtextxy(435,65,"E");
+outtextxy(465,105,"G");
+outtextxy(485,140,"A");
+setcolor(YELLOW);
+outtextxy(495,180,"");
+outtextxy(85,180,"");
+outtextxy(495,250,"");
+outtextxy(85,250,"");
+setcolor(15);
+outtextxy(100,305,"K");
+outtextxy(125,345,"A");
+outtextxy(155,375,"U");
+outtextxy(195,405,"N");
+outtextxy(232,418,"N");
+outtextxy(300,420,"B");
+outtextxy(350,415,"A");
+outtextxy(395,395,"N");
+outtextxy(435,365,"E");
+outtextxy(465,335,"G");
+outtextxy(485,290,"A");
+setlinestyle(1,0,3);
+setcolor(5);
+setfillstyle(0,5);
+circle(300,225,185);
+settextstyle(12,0,5);
+setlinestyle(1,0,1);
+
+
+setcolor(15);
+settextstyle(8,0,5);
+outtextxy(265,195," E  ");
+sound(1000);
+delay(600);
+outtextxy(215,195," R ");
+outtextxy(315,195," P ");
+
+	sound(1100);
+	delay(600);
+sound(1200);
+delay(500);
+
+outtextxy(170,195," O ");
+outtextxy(365,195," A ");
+	sound(1000);
+	delay(500);
+sound(1100);
+delay(550);
+
+outtextxy(115,195," R  ");
+outtextxy(400,195,"  T  ");
+	sound(1200);
+	delay(450);
+sound(1350);
+delay(450);
+
+outtextxy(85,195,"C ");
+outtextxy(500,195,"I");
+	sound(1500);
+	delay(1000);
+
+nosound();
+settextstyle(0,0,1);
+outtextxy(10,460,"PRESS ANY KEY TO CONTINUE ");
+getch();
+
+ }
+
+
+
+ };                              // END OF CLASS
+
+ /*************************************************************
+			THE MAIN
+ ***************************************************************/
+void main()
+{
+  game ga;
+
+   int gdriver = DETECT, gmode, errorcode;
+
+
+
+
+int gd=DETECT,gm;
+initgraph(&gd,&gm,"C:\\turboC3\\BGI");
+   errorcode = graphresult();
+   if (errorcode != grOk)  /* an error occurred */
+   {
+      printf("Graphics error: %s\n",grapherrormsg(errorcode));
+      printf("Press any key to halt:");
+      getch();
+      exit(1); /* terminate with an error code */
+     }
+     cleardevice();
+  /*******************************
+	INTRO
+  *********************************/
+    for(int k=1;k<40;k++)
+{setcolor(RED);settextstyle(0,0,k);
+outtextxy(150,60,"@");
+settextstyle(0,0,k-1);
+setcolor(BLACK);delay(3);
+outtextxy(150,60,"K");
+}
+cleardevice();
+setcolor(RED);
+for( k=0;k<40;k++)
+{setcolor(RED);
+settextstyle(0,0,k);
+outtextxy(150,60,"K");
+settextstyle(0,0,k-1);
+setcolor(BLACK);delay(3);
+outtextxy(150,60,"K");
+}
+cleardevice();
+for( k=0;k<40;k++)
+{
+setcolor(RED);settextstyle(0,0,k);
+outtextxy(150,60,"B");
+settextstyle(0,0,k-1);
+setcolor(BLACK);delay(3);
+outtextxy(150,60,"B");}
+cleardevice();
+for( k=0;k<40;k++)
+{
+setcolor(RED);settextstyle(0,0,k);
+outtextxy(150,60,"C");
+settextstyle(0,0,k-1);
+setcolor(BLACK);delay(3);
+outtextxy(150,60,"C");}
+cleardevice();
+for( k=0;k<40;k++)
+{
+setcolor(RED);settextstyle(0,0,k);
+outtextxy(150,60,"@");
+settextstyle(0,0,k-1);
+setcolor(BLACK);delay(3);
+outtextxy(150,60,"@");}cleardevice();
+  setcolor(WHITE);setfillstyle(7,RED);
+ for(int i=71;i<450;i++)
+{
+bar3d(30, 70, 600,i, 35, 2);delay(2);}
+   settextstyle(4,0,6);outtextxy(220,80,"WELCOME");
+   delay(200);outtextxy(230,120,"TO");
+  delay(200); outtextxy(230,160,"THE");
+  delay(200); outtextxy(230,200,"GAME");
+  delay(200);
+  settextstyle(3,0,3);
+  outtextxy(70,300,"PREPARED BY:");    delay(200);
+  outtextxy(70,350,"-:REENA SINGH:-");delay(200);
+  outtextxy(400,300,"GUIDED BY:");        delay(200);
+  outtextxy(380,350,"-:OM PRAKASH:- ");
+  system("pause");
+
+     char choice='y';
+       while(choice!='n')
+       { cleardevice();
+	setbkcolor(BLACK);
+	settextstyle(3,0,4);
+	setcolor(BLUE);
+	outtextxy(270,100,"MAIN MENU");
+	settextstyle(3,0,3);outtextxy(170,150,"1.HELP");
+	outtextxy(170,185,"2.START");
+	outtextxy(170,215,"3.ENTER QUESTIONS");
+	outtextxy(170,245,"4.DISPLAY QUESTON");
+	outtextxy(170,275,"5.DISPLAY PLAYER");
+	outtextxy(170,305,"6.EXIT");
+	int x;gotoxy(29,25);cout<<"\n\nEnter yout choice::";cin>>x;
+		switch(x)
+	{
+	case 1:
+	ga.help();
+	break;
+
+	case 2:
+	ga.start();
+	break;
+	case 3:
+	ga.editquestion();
+	break;
+	case 4:
+       ga.display();
+	break;
+	case 5:
+	ga.dispp();break;
+	case 6:
+	exit(0);
+	break;}
+       cleardevice();
+	setcolor(WHITE);settextstyle(0,0,2);
+	outtextxy(40,150,"Do you want more operation:");
+	gotoxy(19,11);cin>>choice;
+	}
+
+
+
+}

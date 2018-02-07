@@ -1,0 +1,116 @@
+#include<ctype.h>
+#include<stdlib.h>
+#include<fstream.h>
+#include<string.h>
+#include<stdio.h>
+#include<conio.h>
+#include<string.h>
+
+struct node
+{char na[10],no[11];node  *next;};
+
+class queue
+{node  *front,*rear;
+public:
+queue()
+{front=rear='\0';}
+void push()
+{node *ptr;
+ ptr=new node;
+ if(ptr=='\0')
+ {cout<<"\n\t\tSORRY,SPACE UNAVAILABLE ;(";exit(0);}
+cout<<"\n\tEnter Name-";gets(ptr->na);
+cout<<"\tEnter Amount-";gets(ptr->no);
+if(front=='\0'){front=rear=ptr;front->next=rear;}
+else {rear->next=ptr;ptr->next=front;
+rear=ptr;}
+}
+void pop1()
+{node *ptr;
+ if(front=='\0')
+ {cout<<"\n\t\tSORRY,QUEUE EMPTY ;(";return;}
+ptr=front;front=front->next;
+rear->next=front;
+cout<<"\n\tDeleted name-";cout<<ptr->na;
+cout<<"\tAmount-";cout<<ptr->no;
+if(front==ptr){delete rear;delete front;front=rear='\0';}
+delete ptr;}
+
+void popa()
+{int c=0;node *ptr;
+if(front=='\0')
+ {cout<<"\n\t\tSORRY,QUEUE EMPTY ;(";return;}
+while(front!=rear)
+{ptr=front;c++;
+ front=front->next;rear->next=front;delete ptr;}
+
+ptr=front;c++;
+ front=front->next;rear->next=front;delete ptr;
+delete front;delete rear;front=rear='\0';
+cout<<"\n\t"<<c<<" Data Deleted :(";}
+
+
+void search()
+{node *ptr,*tp;ptr= new node;int c=0;
+if(ptr=='\0')
+ {cout<<"\n\t\tSORRY,MEMORY UNAVAILABLE ;(";exit(0);}
+ if(front=='\0')
+ {cout<<"\n\t\tSORRY,NO DATA TO SEARCH :(";return;}
+cout<<"\n\tEnter Name-";gets(ptr->na);
+ tp=front;
+ do
+{if(strcmp(ptr->na,front->na)==0){c++;break;}front=front->next;}
+while(tp!=front);
+ if(c==0)cout<<"\n\tData not Found :(";
+  else
+  {cout<<"\n\tName-";cout<<front->na;
+   cout<<"\tAmount-";cout<<front->no;}
+   front=tp;   }
+ void disp()
+{node *ptr;int c=0,y=wherey()+1;
+ if(front=='\0')
+ {cout<<"\n\t\tSORRY,QUEUE EMPTY :(";return;}
+ ptr=front;
+cout<<"\t\t\t\tRECORD";
+cout<<"\n----------------------------------------------------------------------";
+cout<<"\n\tSno.\tNAME\tAmount";
+cout<<"\n----------------------------------------------------------------------";
+do
+{cout<<"\n\t"<<++c<<".\t";cout<<ptr->na;
+ cout<<"\t"<<ptr->no;
+ ptr=ptr->next;}
+while(ptr!=front);}
+
+~queue()
+{int c=0;node *ptr;
+ while(front!='\0')
+ {ptr=front;front=front->next;c++;delete ptr;} delete rear;
+  cout<<'\n\t'<<c<<"Data Destructed";}
+
+
+
+
+};
+
+
+void main()
+{int k,i;queue ob[4];
+menu:clrscr();
+ gotoxy(27,1);cout<<"QUEUE THROUGH LINKLIST(Baker Store)";
+ gotoxy(26,2);cout<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+ gotoxy(1,3);cout<<"--------------------------------------------------------------------------------";
+ gotoxy(5,5);
+cout<<"\t1.Cookies\n\t2.Pastries\n\t3.Sweetes\n\t4.Burger\n\t5.EXIT\n";
+cout<<"K-";cin>>i; if(i==5)exit(0);i--;
+gotoxy(1,3);cout<<"--------------------------------------------------------------------------------";
+cout<<"\t1.Enter Record\n\t2.Display Record\n\t3.Search Record\n\t4.Delete Record\n\t5.Main Menu\n\t6.EXIT";
+yo:cout<<"\n K-";cin>>k;
+switch(k)
+{case 1:ob[i].push();break;
+ case 2:ob[i].disp();break;
+ case 3:ob[i].search();break;
+ case 4:{cout<<"\t1.One\n\t2.All";int o;ag:cout<<"\nK'-";cin>>o;switch(o){case 1:ob[i].pop1();break;case 2:ob[i].popa();break;default:goto ag;}}break;
+ case 5:goto menu;break;
+ case 6:exit(0);break;
+ default:goto yo;
+}goto yo;getch();}
